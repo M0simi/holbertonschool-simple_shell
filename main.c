@@ -7,30 +7,30 @@
  */
 int main(void)
 {
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t read;
-    char **args;
+char *line = NULL;
+size_t len = 0;
+ssize_t read;
+char **args;
 
-    while (1)
-    {
-        if (isatty(STDIN_FILENO))
-            write(STDOUT_FILENO, "($) ", 4);
+while (1)
+{
+if (isatty(STDIN_FILENO))
+write(STDOUT_FILENO, "($) ", 4);
 
-        read = getline(&line, &len, stdin);
-        if (read == -1)
-        {
-            free(line);
-            exit(0);
-        }
+read = getline(&line, &len, stdin);
+if (read == -1)
+{
+free(line);
+exit(0);
+}
 
-        args = parse_line(line);
-        if (args[0] != NULL)
-            execute_cmd(args);
+args = parse_line(line);
+if (args[0] != NULL)
+execute_cmd(args);
 
-        free(args);
-    }
+free(args);
+}
 
-    free(line);
-    return (0);
+free(line);
+return (0);
 }
