@@ -1,8 +1,8 @@
 #include "shell.h"
 
 /**
- * execute_cmd - Executes a command with path handling
- * @args: Argument vector (command + its arguments)
+ * execute_cmd - Executes a command with path resolution
+ * @args: Argument vector (command and its arguments)
  */
 void execute_cmd(char **args)
 {
@@ -29,7 +29,7 @@ void execute_cmd(char **args)
 		return;
 	}
 
-	/* Check if command is an absolute/relative path and executable */
+	/* Check if command is directly executable or resolve from PATH */
 	if (access(args[0], X_OK) == 0)
 	{
 		cmd_path = strdup(args[0]);
@@ -44,10 +44,12 @@ void execute_cmd(char **args)
 		}
 	}
 
+	/* Fork and execute */
 	pid = fork();
 
-	if (pid == 0) /* child */
+	if (pid == 0)
 	{
+		/* Child process */
 		if (execve(cmd_path, args, environ) == -1)
 		{
 			fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
@@ -59,8 +61,9 @@ void execute_cmd(char **args)
 	{
 		perror("fork");
 	}
-	else /* parent */
+	else
 	{
+		/* Parent process */
 		waitpid(pid, &status, 0);
 		free(cmd_path);
 	}
