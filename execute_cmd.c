@@ -1,19 +1,23 @@
 #include "shell.h"
 
 /**
- * execute_cmd - Executes a command
- * @args: Arguments passed to the shell
+ * execute_cmd - Executes a command with PATH handling
+ * @args: Argument vector
  */
 void execute_cmd(char **args)
 {
 pid_t pid;
 int status;
+char *cmd_path;
+
+if (args[0] == NULL)
+return;
 
 if (strcmp(args[0], "exit") == 0)
 exit(0);
+
 if (strcmp(args[0], "env") == 0)
 {
-
 int i = 0;
 while (environ[i])
 {
@@ -23,17 +27,39 @@ i++;
 return;
 }
 
+/* make sure of the command */
+if (access(args[0], X_OK) == 0)
+{
+cmd_path = strdup(args[0]);
+}
+else
+{
+cmd_path = find_command(args[0]);
+if (cmd_path == NULL)
+{
+fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+return;
+}
+}
+
 pid = fork();
+
 if (pid == 0)
 {
-if (execvp(args[0], args) == -1)
+if (execve(cmd_path, args, environ) == -1)
 {
-perror("hsh");
-exit(EXIT_FAILURE);
+fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+free(cmd_path);
+exit(127);
 }
 }
 else if (pid < 0)
+{
 perror("fork");
+}
 else
+{
 waitpid(pid, &status, 0);
+free(cmd_path);
+}
 }
