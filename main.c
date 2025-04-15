@@ -26,8 +26,15 @@ exit(0);
 
 args = parse_line(line);
 if (args[0] != NULL)
+{
+if (strcmp(args[0], "exit") == 0)
+{
+free(args);
+free(line);
+exit(0);
+}
 execute_cmd(args);
-
+}
 free(args);
 }
 
