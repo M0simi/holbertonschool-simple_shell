@@ -59,5 +59,7 @@ else
 {
 waitpid(pid, &status, 0);
 free(cmd_path);
+if (WIFEXITED(status))
+exit(WEXITSTATUS(status));
 }
 }
