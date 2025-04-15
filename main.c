@@ -20,6 +20,7 @@ write(STDOUT_FILENO, "($) ", 4);
 read = getline(&line, &len, stdin);
 if (read == -1)
 {
+free(args);
 free(line);
 exit(0);
 }
@@ -38,6 +39,7 @@ execute_cmd(args);
 free(args);
 }
 
+free(args);
 free(line);
 return (0);
 }
