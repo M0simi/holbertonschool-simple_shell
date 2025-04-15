@@ -36,7 +36,7 @@ cmd_path = find_command(args[0]);
 if (cmd_path == NULL)
 {
 fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-return;
+exit(127);
 }
 }
 
