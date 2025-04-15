@@ -4,12 +4,33 @@
 #include <unistd.h>
 #include "shell.h"
 
+
+extern char **environ;
+
 char *find_command(char *command)
 {
-char *path = getenv("PATH");
-char *path_copy = strdup(path);
-char *dir = strtok(path_copy, ":");
+char *path_env = NULL;
+char *path_copy, *dir;
 char full_path[1024];
+int i = 0;
+
+/* search PATH manually inside environ */
+
+while (environ[i])
+{
+if (strncmp(environ[i], "PATH=", 5) == 0)
+{
+path_env = environ[i] + 5;
+break;
+}
+i++;
+}
+
+if (!path_env)
+return NULL;
+
+path_copy = strdup(path_env);
+dir = strtok(path_copy, ":");
 
 while (dir)
 {
