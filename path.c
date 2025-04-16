@@ -4,9 +4,12 @@
 #include <unistd.h>
 #include "shell.h"
 
-
-extern char **environ;
-
+/**
+ * find_command - finds the path of a given command
+ * @command: the command to search for
+ *
+ * Return: the full path to the command, or NULL if not found
+ */
 char *find_command(char *command)
 {
 char *path_env = NULL;
@@ -27,7 +30,7 @@ i++;
 }
 
 if (!path_env)
-return NULL;
+return (NULL);
 
 path_copy = strdup(path_env);
 dir = strtok(path_copy, ":");
@@ -38,11 +41,11 @@ sprintf(full_path, "%s/%s", dir, command);
 if (access(full_path, X_OK) == 0)
 {
 free(path_copy);
-return strdup(full_path);
+return (strdup(full_path));
 }
 dir = strtok(NULL, ":");
 }
 
 free(path_copy);
-return NULL;
+return (NULL);
 }

@@ -21,6 +21,7 @@ void execute_cmd(char **args)
 	if (strcmp(args[0], "env") == 0)
 	{
 		int i = 0;
+
 		while (environ[i])
 			printf("%s\n", environ[i++]);
 		return;
@@ -45,21 +46,21 @@ void execute_cmd(char **args)
 	pid = fork();
 
 	if (pid == 0)
-	{
-		if (execve(cmd_path, args, environ) == -1)
-		{
-			fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-			free(cmd_path);
-			exit(127);
-		}
-	}
-	else if (pid < 0)
-	{
-		perror("fork");
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		free(cmd_path);
+{
+if (execve(cmd_path, args, environ) == -1)
+{
+fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+free(cmd_path);
+exit(127);
+}
+}
+else if (pid < 0)
+{
+perror("fork");
+}
+else
+{
+waitpid(pid, &status, 0);
+free(cmd_path);
 	}
 }
