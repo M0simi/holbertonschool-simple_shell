@@ -40,6 +40,6 @@ int main(void)
 	}
 	printf("OK\n");
 	free(line);
-	return (status);
+	exit(status);
 }
 
