@@ -60,22 +60,17 @@ fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
 free(cmd_path);
 exit(127);
 }
+
 }
 else if (pid < 0)
 {
 perror("fork");
 }
-else
+else if (pid > 0)
 {
-if (waitpid(pid, &status, 0) != -1)
-{
-if (WIFEXITED(status))
-{
-int exit_status = WEXITSTATUS(status);
-exit(exit_status);
-}
-}
+waitpid(pid, &status, 0);
 free(cmd_path);
+return (WIFEXITED(status) ? WEXITSTATUS(status) : 1);
 }
 
 return (0);
