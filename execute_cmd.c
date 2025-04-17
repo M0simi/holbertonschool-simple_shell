@@ -79,5 +79,5 @@ return (exit_status);
 free(cmd_path);
 }
 
-return (0);
+return (1);
 }
