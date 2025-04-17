@@ -67,7 +67,15 @@ perror("fork");
 }
 else
 {
-waitpid(pid, &status, 0);
+if (waitpid(pid, &status, 0) != -1)
+{
+if (WIFEXITED(status))
+{
+int exit_status = WEXITSTATUS(status);
+if (exit_status != 0)
+exit(exit_status);
+}
+}
 free(cmd_path);
 }
 
