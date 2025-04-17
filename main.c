@@ -10,6 +10,7 @@ int main(void)
 	size_t len = 0;
 	ssize_t read;
 	char **args;
+	int status;
 
 	while (1)
 	{
@@ -33,7 +34,13 @@ int main(void)
 				exit(0);
 			}
 
-			execute_cmd(args);
+			status = execute_cmd(args);
+			if (status == 127)
+			{
+				free(args);
+				free(line);
+				exit(127);
+			}
 		}
 
 		free(args);
@@ -42,3 +49,4 @@ int main(void)
 	free(line);
 	return (0);
 }
+

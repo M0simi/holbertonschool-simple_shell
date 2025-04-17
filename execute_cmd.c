@@ -3,6 +3,7 @@
 /**
  * execute_cmd - Executes a command with path resolution
  * @args: Argument vector (command and its arguments)
+ * Return: 127 if command not found, 0 otherwise
  */
 int execute_cmd(char **args)
 {
@@ -46,23 +47,23 @@ int execute_cmd(char **args)
 	pid = fork();
 
 	if (pid == 0)
-{
-if (execve(cmd_path, args, environ) == -1)
-{
-fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-free(cmd_path);
-exit(127);
-}
-}
-else if (pid < 0)
-{
-perror("fork");
-}
-else
-{
-waitpid(pid, &status, 0);
-free(cmd_path);
-}
+	{
+		if (execve(cmd_path, args, environ) == -1)
+		{
+			fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+			free(cmd_path);
+			exit(127);
+		}
+	}
+	else if (pid < 0)
+	{
+		perror("fork");
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+		free(cmd_path);
+	}
 
-return (0);
+	return (0);
 }
