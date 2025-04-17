@@ -14,9 +14,6 @@ char *cmd_path;
 if (args[0] == NULL)
 return (0);
 
-/* Built-in: exit */
-if (strcmp(args[0], "exit") == 0)
-exit(0);
 
 /* Built-in: env */
 if (strcmp(args[0], "env") == 0)

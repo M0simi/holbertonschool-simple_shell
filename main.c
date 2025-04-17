@@ -11,8 +11,9 @@ int main(void)
 	ssize_t read;
 	char **args;
 	int status;
+	int should_exit = 0;
 
-	while (1)
+	while (!should_exit)
 	{
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "($) ", 4);
@@ -29,17 +30,18 @@ int main(void)
 		{
 			if (strcmp(args[0], "exit") == 0)
 			{
-				free(args);
-				free(line);
-				exit(0);
+				should_exit = 1;
 			}
-
-			status = execute_cmd(args);
-			if (status == 127)
+			else
 			{
-				free(args);
-				free(line);
-				exit(127);
+
+				status = execute_cmd(args);
+				if (status == 127)
+				{
+					free(args);
+					free(line);
+					exit(127);
+				}
 			}
 		}
 
