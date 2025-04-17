@@ -35,8 +35,7 @@ int execute_cmd(char **args)
 	}
 	else
 	{
-		/* check if PATH is set before searching */
-		if (getenv("PATH") != NULL)
+		if (has_path_env())
 			cmd_path = find_command(args[0]);
 		else
 			cmd_path = NULL;
@@ -49,6 +48,7 @@ int execute_cmd(char **args)
 	}
 
 	/* fork and exec */
+
 	pid = fork();
 
 	if (pid == 0)

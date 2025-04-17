@@ -49,3 +49,22 @@ dir = strtok(NULL, ":");
 free(path_copy);
 return (NULL);
 }
+
+
+
+
+#include "shell.h"
+#include <string.h>
+
+int has_path_env(void)
+{
+	int i = 0;
+
+	while (environ[i])
+	{
+		if (strncmp(environ[i], "PATH=", 5) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
