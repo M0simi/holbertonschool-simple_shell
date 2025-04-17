@@ -72,7 +72,6 @@ if (waitpid(pid, &status, 0) != -1)
 if (WIFEXITED(status))
 {
 int exit_status = WEXITSTATUS(status);
-if (exit_status != 0)
 exit(exit_status);
 }
 }
