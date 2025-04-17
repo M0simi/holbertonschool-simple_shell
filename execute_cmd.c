@@ -29,23 +29,20 @@ int execute_cmd(char **args)
 	}
 
 	/* resolve command */
+
 	if (access(args[0], X_OK) == 0)
 	{
-		cmd_path = strdup(args[0]);
+        cmd_path = strdup(args[0]);
 	}
 	else
 	{
-		if (has_path_env())
-			cmd_path = find_command(args[0]);
-		else
-			cmd_path = NULL;
-
-		if (cmd_path == NULL)
-		{
-			fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-			return (127);
-		}
-	}
+        cmd_path = find_command(args[0]);
+        if (cmd_path == NULL)
+        {
+                fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+                return (127);
+        }
+}
 
 	/* fork and exec */
 
