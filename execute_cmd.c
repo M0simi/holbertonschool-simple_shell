@@ -72,6 +72,7 @@ if (waitpid(pid, &status, 0) != -1)
 if (WIFEXITED(status))
 {
 int exit_status = WEXITSTATUS(status);
+free(cmd_path);
 return (exit_status);
 }
 }
