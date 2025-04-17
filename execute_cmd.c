@@ -77,7 +77,7 @@ return (exit_status);
 }
 }
 free(cmd_path);
+return (2);
 }
 
-return (1);
 }
