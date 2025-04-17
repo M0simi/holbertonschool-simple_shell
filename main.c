@@ -10,7 +10,6 @@ int main(void)
 	size_t len = 0;
 	ssize_t read;
 	char **args;
-	int status;
 	int should_exit = 0;
 
 	while (!should_exit)
@@ -21,8 +20,7 @@ int main(void)
 		read = getline(&line, &len, stdin);
 		if (read == -1)
 		{
-			free(line);
-			exit(0);
+			break;
 		}
 
 		args = parse_line(line);
@@ -35,13 +33,7 @@ int main(void)
 			else
 			{
 
-				status = execute_cmd(args);
-				if (status == 127)
-				{
-					free(args);
-					free(line);
-					exit(127);
-				}
+				execute_cmd(args);
 			}
 		}
 
