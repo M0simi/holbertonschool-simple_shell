@@ -14,6 +14,8 @@ char *cmd_path;
 if (args[0] == NULL)
 return (0);
 
+if (strcmp(args[0], "exit") == 0)
+exit(0);
 
 /* Built-in: env */
 if (strcmp(args[0], "env") == 0)
@@ -70,7 +72,7 @@ if (waitpid(pid, &status, 0) != -1)
 if (WIFEXITED(status))
 {
 int exit_status = WEXITSTATUS(status);
-exit(exit_status);
+return (exit_status);
 }
 }
 free(cmd_path);

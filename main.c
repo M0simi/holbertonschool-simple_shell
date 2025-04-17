@@ -10,9 +10,9 @@ int main(void)
 	size_t len = 0;
 	ssize_t read;
 	char **args;
-	int should_exit = 0;
+	int status = 0;
 
-	while (!should_exit)
+	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "($) ", 4);
@@ -20,7 +20,8 @@ int main(void)
 		read = getline(&line, &len, stdin);
 		if (read == -1)
 		{
-			break;
+			free(line);
+			exit(0);
 		}
 
 		args = parse_line(line);
@@ -28,19 +29,17 @@ int main(void)
 		{
 			if (strcmp(args[0], "exit") == 0)
 			{
-				should_exit = 1;
+				free(args);
+				free(line);
+				exit(0);
 			}
-			else
-			{
-
-				execute_cmd(args);
-			}
+			status = execute_cmd(args);
 		}
 
 		free(args);
 	}
-
+	printf("OK\n");
 	free(line);
-	return (0);
+	return (status);
 }
 
