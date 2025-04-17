@@ -8,7 +8,7 @@
 #include <sys/wait.h>
 
 char **parse_line(char *line);
-void execute_cmd(char **args);
+int execute_cmd(char **args);
 extern char **environ;
 char *find_command(char *command);
 
