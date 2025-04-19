@@ -33,13 +33,15 @@ int main(void)
 				free(line);
 				exit(0);
 			}
-			status = execute_cmd(args);
+		}
+		status = execute_cmd(args);
+		if (status == 2)
+		{
+			exit(2);
 		}
 
 		free(args);
 	}
-	printf("OK\n");
-	free(line);
-	exit(status);
+	return (status);
 }
 
