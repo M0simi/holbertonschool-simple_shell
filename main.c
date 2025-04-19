@@ -29,9 +29,14 @@ int main(void)
 		{
 			if (strcmp(args[0], "exit") == 0)
 			{
+				int exit_status = status;
+
+				if (args[1])
+					exit_status = atoi(args[1]);
+
 				free(args);
 				free(line);
-				exit(status);
+				exit(exit_status);
 			}
 		}
 		status = execute_cmd(args);
