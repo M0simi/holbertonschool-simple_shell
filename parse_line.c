@@ -36,5 +36,4 @@ token = strtok(NULL, " \n\t");
 }
 tokens[i] = NULL;
 return (tokens);
-free(tokens);
 }

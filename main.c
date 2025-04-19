@@ -34,8 +34,8 @@ int main(void)
 				if (args[1])
 					exit_status = atoi(args[1]);
 
-				free(args);
 				free(line);
+				free(args);
 				exit(exit_status);
 			}
 			status = execute_cmd(args);
@@ -43,10 +43,10 @@ int main(void)
 		free(args);
 		if (status == 2)
 		{
+			free(line);
 			exit(2);
 		}
 
-		free(args);
 	}
 	return (status);
 }
