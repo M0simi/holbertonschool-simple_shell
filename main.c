@@ -38,8 +38,9 @@ int main(void)
 				free(line);
 				exit(exit_status);
 			}
+			status = execute_cmd(args);
 		}
-		status = execute_cmd(args);
+		free(args);
 		if (status == 2)
 		{
 			exit(2);
