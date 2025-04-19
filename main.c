@@ -31,7 +31,7 @@ int main(void)
 			{
 				free(args);
 				free(line);
-				exit(0);
+				exit(status);
 			}
 		}
 		status = execute_cmd(args);

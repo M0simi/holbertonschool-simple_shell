@@ -14,8 +14,6 @@ char *cmd_path;
 if (args[0] == NULL)
 return (0);
 
-if (strcmp(args[0], "exit") == 0)
-exit(0);
 
 /* Built-in: env */
 if (strcmp(args[0], "env") == 0)
@@ -64,11 +62,11 @@ exit(127);
 else if (pid < 0)
 {
 perror("fork");
+status = 1;
 }
 else
 {
 waitpid(pid, &status, 0);
-free(args);
 if (WIFEXITED(status))
 status = WEXITSTATUS(status);
 
@@ -76,5 +74,6 @@ else
 status = 1;
 
 }
+free(cmd_path);
 return (status);
 }
