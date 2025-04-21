@@ -28,6 +28,4 @@ Compile all the `.c` files using:
 
 ```bash
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
-
-written by 
-Abdulaziz Almotairi and Meshari Alosimi
+written by Abdulaziz Almotairi and Meshari Alosimi

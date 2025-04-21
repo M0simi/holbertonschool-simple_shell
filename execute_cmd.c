@@ -45,11 +45,17 @@ return (127);
 }
 }
 /* Fork and exec */
-status = run_command (cmd_path, args);
+status = run_command(cmd_path, args);
 free(cmd_path);
 return (status);
 }
 
+/**
+ * run_command - Forks and executes the command
+ * @cmd_path: Resolved command path
+ * @args: Argument vector
+ * Return: Exit status
+ */
 int run_command(char *cmd_path, char **args)
 {
 
