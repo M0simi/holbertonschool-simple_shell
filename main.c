@@ -16,14 +16,12 @@ int main(void)
 	{
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "($) ", 4);
-
 		read = getline(&line, &len, stdin);
 		if (read == -1)
 		{
 			free(line);
 			exit(0);
 		}
-
 		args = parse_line(line);
 		if (args[0] != NULL)
 		{
@@ -33,7 +31,6 @@ int main(void)
 
 				if (args[1])
 					exit_status = atoi(args[1]);
-
 				free(line);
 				free(args);
 				exit(exit_status);
@@ -46,7 +43,6 @@ int main(void)
 			free(line);
 			exit(2);
 		}
-
 	}
 	return (status);
 }

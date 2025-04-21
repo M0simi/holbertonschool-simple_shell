@@ -1,5 +1,8 @@
 #include "shell.h"
 
+
+int run_command(char *cmd_path, char **args);
+
 /**
  * execute_cmd - Executes a command with path resolution
  * @args: Argument vector (command and its arguments)
@@ -7,14 +10,11 @@
  */
 int execute_cmd(char **args)
 {
-pid_t pid;
 int status;
 char *cmd_path;
 
 if (args[0] == NULL)
 return (0);
-
-
 /* Built-in: env */
 if (strcmp(args[0], "env") == 0)
 {
@@ -23,7 +23,6 @@ while (environ[i])
 printf("%s\n", environ[i++]);
 return (0);
 }
-
 /* Check if command contains '/' */
 if (strchr(args[0], '/'))
 {
@@ -45,8 +44,18 @@ fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
 return (127);
 }
 }
-
 /* Fork and exec */
+status = run_command (cmd_path, args);
+free(cmd_path);
+return (status);
+}
+
+int run_command(char *cmd_path, char **args)
+{
+
+pid_t pid;
+int status;
+
 pid = fork();
 
 if (pid == 0)
@@ -60,26 +69,23 @@ free(cmd_path);
 }
 exit(127);
 }
-
 }
 else if (pid < 0)
 {
 perror("fork");
-status = 1;
+return (1);
 }
 else
 {
 waitpid(pid, &status, 0);
 if (WIFEXITED(status))
 status = WEXITSTATUS(status);
-
 else
 status = 1;
-
 }
 if (cmd_path != NULL)
 {
 free(cmd_path);
 }
-return (status);
+return (1);
 }
