@@ -1,31 +1,64 @@
 # simple_shell
 
-## Description
-**simple_shell** is a basic UNIX command line interpreter, created as part of the Holberton School curriculum. It aims to replicate the behavior of the standard shell (`/bin/sh`) by executing commands entered by the user, whether interactively or through input redirection (non-interactive mode).
+## 🧠 Description
+**simple_shell** is a basic UNIX command-line interpreter built as part of the Holberton School curriculum.  
+It replicates the behavior of the standard shell (`/bin/sh`) and allows users to execute commands both interactively and non-interactively.
 
-This project provided deep understanding of system calls in C, process creation (`fork`), program execution (`execve`), memory management, and more.
+This project offers hands-on experience with system-level programming in C, focusing on:
+- Process creation (`fork`)
+- Program execution (`execve`)
+- Environment handling
+- Memory management
+- Input/output operations
 
 ---
 
-## Features
-- Executes commands, both with absolute path or found in the `$PATH` environment variable.
-- Supports built-in commands:
+## ✨ Features
+
+- ✅ Execute commands using absolute paths or via the `$PATH` environment.
+- 🔄 Supports built-in commands:
   - `exit`: exits the shell.
-  - `env`: displays the current environment variables.
-- Works in both:
-  - **Interactive mode**: user types commands manually.
-  - **Non-interactive mode**: commands are piped into the shell.
-- Graceful error handling for unknown commands or execution issues.
-- Manual page included (`man_1_simple_shell`).
+  - `env`: prints current environment variables.
+- 💬 Modes:
+  - **Interactive**: wait for user input.
+  - **Non-interactive**: read input from piped or redirected data.
+- ⚠️ Graceful error handling for invalid or unknown commands.
+- 📖 Manual page: `man_1_simple_shell` included.
 
 ---
 
-## How to Use
+## 🛠️ Compilation
 
-### 🛠️ Compilation
-
-Compile all the `.c` files using:
+To compile the shell, run:
 
 ```bash
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+
+
+
+Interactive mode:
+bash
+./hsh
+$ ls -l
+$ pwd
+$ exit
+
+
+
+Non-interactive mode:
+bash
+echo "ls -l" | ./hsh
+
+
+
+
+File 
+File | Description
+main.c | Entry point of the shell
+shell.c | Core shell loop and execution
+builtins.c | Implementation of built-in commands
+utils.c | Utility functions (e.g. string parsing)
+man_1_simple_shell | Manual page
+
+
 written by Abdulaziz Almotairi and Meshari Alosimi
