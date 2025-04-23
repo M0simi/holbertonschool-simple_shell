@@ -69,7 +69,10 @@ if (pid == 0)
 if (execve(cmd_path, args, environ) == -1)
 {
 fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-
+if (cmd_path != NULL)
+{
+free(cmd_path);
+}
 exit(127);
 }
 }
@@ -86,6 +89,10 @@ status = WEXITSTATUS(status);
 else
 status = 1;
 }
+if (cmd_path != NULL)
+{
+free(cmd_path);
+}
+return (1);
 
-return (status);
 }
