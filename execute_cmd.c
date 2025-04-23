@@ -1,8 +1,5 @@
 #include "shell.h"
 
-
-int run_command(char *cmd_path, char **args);
-
 /**
  * execute_cmd - Executes a command with path resolution
  * @args: Argument vector (command and its arguments)
@@ -10,6 +7,7 @@ int run_command(char *cmd_path, char **args);
  */
 int execute_cmd(char **args)
 {
+pid_t pid;
 int status;
 char *cmd_path;
 
@@ -45,23 +43,6 @@ return (127);
 }
 }
 /* Fork and exec */
-status = run_command(cmd_path, args);
-free(cmd_path);
-return (status);
-}
-
-/**
- * run_command - Forks and executes the command
- * @cmd_path: Resolved command path
- * @args: Argument vector
- * Return: Exit status
- */
-int run_command(char *cmd_path, char **args)
-{
-
-pid_t pid;
-int status;
-
 pid = fork();
 
 if (pid == 0)
@@ -79,7 +60,7 @@ exit(127);
 else if (pid < 0)
 {
 perror("fork");
-return (1);
+status = 1;
 }
 else
 {
@@ -93,6 +74,5 @@ if (cmd_path != NULL)
 {
 free(cmd_path);
 }
-return (1);
-
+return (status);
 }
