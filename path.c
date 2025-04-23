@@ -37,12 +37,20 @@ dir = strtok(path_copy, ":");
 
 while (dir)
 {
+        /* Allocate memory for full_path dynamically */
+        full_path = malloc(strlen(dir) + strlen(command) + 2); /* 1 for '/' and 1 for null terminator */
+        if (!full_path)
+        {
+            free(path_copy);
+            return (NULL); /* Handle memory allocation failure */
+        }
 sprintf(full_path, "%s/%s", dir, command);
 if (access(full_path, X_OK) == 0)
 {
 free(path_copy);
-return (strdup(full_path));
+return (full_path);
 }
+free(full_path);
 dir = strtok(NULL, ":");
 }
 
