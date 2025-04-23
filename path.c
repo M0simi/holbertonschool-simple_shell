@@ -37,7 +37,7 @@ dir = strtok(path_copy, ":");
 
 while (dir)
 {
-    sprintf(full_path, "%s/%s", dir, command);
+sprintf(full_path, "%s/%s", dir, command);
 if (access(full_path, X_OK) == 0)
 {
 free(path_copy);
