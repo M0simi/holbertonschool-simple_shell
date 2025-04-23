@@ -9,17 +9,18 @@ int handle_builtins(char **args)
 {
 	int i;
 
+	/* Handle built-in "exit" command */
 	if (strcmp(args[0], "exit") == 0)
 		exit(0);
-
+	/* Handle built-in "env" command */
 	if (strcmp(args[0], "env") == 0)
 	{
 		for (i = 0; environ[i]; i++)
 			printf("%s\n", environ[i]);
-		return (1);
+		return (1); /* A built-in command was handled */
 	}
 
-	return (0);
+	return (0); /* Not a built-in command */
 }
 
 /**
@@ -31,15 +32,17 @@ char *resolve_command_path(char **args)
 {
 	char *cmd_path = NULL;
 
+	/* If the command contains '/', assume it's a path */
 	if (strchr(args[0], '/'))
 	{
 		if (access(args[0], X_OK) == 0)
-			cmd_path = strdup(args[0]);
+			cmd_path = strdup(args[0]); /* Use the given path */
 		else
 			return (NULL);
 	}
 	else
 	{
+		/* Free memory used for command path */
 		cmd_path = find_command(args[0]);
 	}
 
@@ -61,6 +64,7 @@ int run_command(char *cmd_path, char **args)
 
 	if (pid == 0)
 	{
+		/* Child process: Execute the command */
 		execve(cmd_path, args, environ);
 		fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
 		free(cmd_path);
@@ -68,10 +72,12 @@ int run_command(char *cmd_path, char **args)
 	}
 	else if (pid < 0)
 	{
+		/* Fork failed */
 		perror("fork");
 	}
 	else
 	{
+		/* Parent process: Wait for the child to finish */
 		if (waitpid(pid, &status, 0) != -1)
 		{
 			if (WIFEXITED(status))
@@ -95,9 +101,11 @@ int execute_cmd(char **args)
 	if (args[0] == NULL)
 		return (0);
 
+	/* Check and handle built-in commands */
 	if (handle_builtins(args))
 		return (0);
 
+	/* Resolve the full path of the command */
 	cmd_path = resolve_command_path(args);
 	if (cmd_path == NULL)
 	{
