@@ -57,6 +57,7 @@
  if (execve(cmd_path, args, environ) == -1)
  {
  fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+ if (cmd_path != NULL)
  free(cmd_path);
  exit(127);
  }
@@ -76,7 +77,7 @@ if (waitpid(pid, &status, 0) != -1)
  exit(exit_status);
  }
  }
- if (cmd_path)
+ if (cmd_path != NULL)
  free(cmd_path);
  }
  
