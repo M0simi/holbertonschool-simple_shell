@@ -12,9 +12,9 @@
  */
 char *find_command(char *command)
 {
-char *path_env = NULL;
-char *path_copy, *dir;
-char full_path[1024];
+char *path_env = NULL; /* this will store the PATH value from the environment */
+char *path_copy, *dir; /* used to split the PATH string */
+char full_path[1024];  /* buffer to build full paths like /bin/ls */
 int i = 0;
 
 /* search PATH manually inside environ */
