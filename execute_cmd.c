@@ -76,6 +76,7 @@ if (waitpid(pid, &status, 0) != -1)
  exit(exit_status);
  }
  }
+ if (cmd_path)
  free(cmd_path);
  }
  
